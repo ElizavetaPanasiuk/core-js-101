@@ -202,8 +202,8 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  return `┌${'─'.repeat(width - 2)}┐\n${`│${' '.repeat(width - 2)}│\n`.repeat(height - 2)}└${'─'.repeat(width - 2)}┘\n`;
 }
 
 
@@ -224,6 +224,7 @@ function getRectangleString(/* width, height */) {
  *
  */
 function encodeToRot13(/* str */) {
+  // return str.forEach(letter => charCodeAt(str))
   throw new Error('Not implemented');
 }
 
@@ -240,8 +241,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return typeof value === 'string' || (typeof value === 'object' && value !== null && JSON.stringify(value) === `"${value.toString()}"`);
 }
 
 
