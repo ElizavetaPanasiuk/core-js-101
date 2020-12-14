@@ -291,8 +291,17 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  if (arr.length <= 3) {
+    return arr.sort((a, b) => b - a);
+  }
+  const array = arr;
+  const Maxes = (new Array(3)).fill(arr[0]);
+  return Maxes.map(() => {
+    const curMax = Math.max(...array);
+    array.splice(array.indexOf(curMax), 1);
+    return curMax;
+  });
 }
 
 
@@ -359,8 +368,8 @@ function getItemsSum(arr) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.reduce((count, elem) => (elem ? count : count + 1), 0);
 }
 
 /**
@@ -423,8 +432,22 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.country === b.country) {
+      if (a.city > b.city) {
+        return 1;
+      }
+      if (a.city < b.city) {
+        return -1;
+      }
+      return 0;
+    }
+    return -1;
+  });
 }
 
 /**
@@ -445,12 +468,9 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  /* const arr = new Array(n);
-  arr.fill(new Array(n));
-  arr.map(elem => elem.fill(0));
-  return arr; */
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return (new Array(n)).fill([]).map((elem1, index1) => (new Array(n).fill(0))
+    .map((elem2, index2) => (index1 === index2 ? 1 : 0)));
 }
 
 /**
@@ -552,9 +572,8 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
-  // return indexes.reduce((sum, elem) => sum + elem, 0);
+function getElementByIndexes(arr, indexes) {
+  return arr.toString().split(',')[indexes.reduce((sum, cur) => sum + cur, 0)];
 }
 
 /**
