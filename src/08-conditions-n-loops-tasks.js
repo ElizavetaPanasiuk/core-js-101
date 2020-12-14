@@ -282,8 +282,24 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  const ccn1 = String(ccn);
+  for (let i = ccn1.length - 1, k = 1; i >= 0; i -= 1) {
+    if (k === 2) {
+      if (ccn1[i] * 2 >= 10) {
+        const num = ccn1[i] * 2;
+        sum += +String(num)[0] + +String(num)[1];
+      } else {
+        sum += Number(ccn1[i] * 2);
+      }
+      k = 1;
+    } else {
+      k = 2;
+      sum += +ccn1[i];
+    }
+  }
+  return (sum % 10 === 0);
 }
 
 /**
@@ -389,8 +405,24 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const pathes1 = pathes;
+  const result = [];
+  for (let i = 0; i < pathes1.length; i += 1) {
+    pathes1[i] = pathes1[i].split('/');
+  }
+  const others = pathes1.slice(1);
+  for (let i = 0; i < pathes1[0].length; i += 1) {
+    if (others.every((elem) => pathes1[0][i] === elem[i])) {
+      result.push(pathes1[0][i]);
+    } else {
+      break;
+    }
+  }
+  if (result.length !== 0) {
+    return `${result.join('/')}/`;
+  }
+  return '';
 }
 
 
@@ -462,8 +494,38 @@ function getMatrixProduct(m1, m2) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let winner;
+  if (((position[0][0] === position[1][1] && position[1][1] === position[2][2])
+    || (position[0][2] === position[1][1] && position[1][1] === position[2][0])) && position[1][1] === '0') {
+    winner = '0';
+  } else if (((position[0][0] === position[1][1] && position[1][1] === position[2][2])
+    || (position[0][2] === position[1][1] && position[1][1] === position[2][0])) && position[1][1] === 'X') {
+    winner = 'X';
+  } else {
+    for (let i = 0; i < position.length; i += 1) {
+      if (position[i][0] === position[i][1] && position[i][1] === position[i][2] && position[i][0] === '0') {
+        winner = '0';
+        break;
+      } else if (position[i][0] === position[i][1] && position[i][1] === position[i][2] && position[i][0] === 'X') {
+        winner = 'X';
+        break;
+      } else {
+        for (let j = 0; j < position[i].length; j += 1) {
+          if (i === 0 && position[i][j] === position[i + 1][j]
+            && position[i + 1][j] === position[i + 2][j] && position[i][j] === '0') {
+            winner = '0';
+            break;
+          } else if (i === 0 && position[i][j] === position[i + 1][j]
+            && position[i + 1][j] === position[i + 2][j] && position[i][j] === 'X') {
+            winner = 'X';
+            break;
+          }
+        }
+      }
+    }
+  }
+  return winner;
 }
 
 
